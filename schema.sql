@@ -1,0 +1,44 @@
+DROP DATABASE IF EXISTS album24;
+CREATE DATABASE album24;
+USE album24;
+
+CREATE TABLE artist (
+    artist_id MEDIUMINT UNSIGNED AUTO_INCREMENT NOT NULL,
+    fName VARCHAR(30) NOT NULL,
+    lName VARCHAR(30) NOT NULL,
+    alias VARCHAR(30),
+    CONSTRAINT pk_artist PRIMARY KEY (artist_id)
+);
+
+CREATE TABLE band (
+    band_id MEDIUMINT UNSIGNED AUTO_INCREMENT NOT NULL,
+    band VARCHAR(50) NOT NULL,
+    CONSTRAINT pk_band PRIMARY KEY (band_id)
+);
+
+CREATE TABLE label (
+    label_id TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
+    label VARCHAR(50) NOT NULL,
+    CONSTRAINT pk_label PRIMARY KEY (label_id)
+);
+
+CREATE TABLE genre (
+    genre_id TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
+    genre VARCHAR(50) NOT NULL, 
+    CONSTRAINT pk_genre PRIMARY KEY (genre_id)
+);
+
+CREATE TABLE album (
+    album_id INT UNSIGNED AUTO_INCREMENT NOT NULL,
+    title VARCHAR(50) NOT NULL,
+    artist_id MEDIUMINT UNSIGNED,
+    band_id MEDIUMINT UNSIGNED,
+    label_id TINYINT UNSIGNED,
+    yr_released YEAR,
+    date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT pk_album PRIMARY KEY (album_id),
+    CONSTRAINT fk_artist FOREIGN KEY (artist_id) REFERENCES artist (artist_id),
+    CONSTRAINT fk_band FOREIGN KEY (band_id) REFERENCES band (band_id),
+    CONSTRAINT fk_label FOREIGN KEY (label_id) REFERENCES label (label_id)
+);
